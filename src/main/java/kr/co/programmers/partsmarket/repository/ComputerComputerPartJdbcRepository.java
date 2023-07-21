@@ -4,10 +4,10 @@ import java.nio.ByteBuffer;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -58,13 +58,14 @@ public class ComputerComputerPartJdbcRepository implements ComputerPartRepositor
 	}
 
 	@Override
-	public Optional<ComputerPart> findById(UUID partId) {
-		return Optional.empty();
+	public ComputerPart findById(UUID partId) {
+		return namedParameterJdbcTemplate.queryForObject("SELECT * FROM computer_parts WHERE part_id = UNHEX(REPLACE(:partId, '-', ''))",
+			Collections.singletonMap("partId", partId.toString().getBytes()), computerPartRowMapper);
 	}
 
 	@Override
 	public void deleteAll() {
-
+		namedParameterJdbcTemplate.update("DELETE FROM computerParts", Collections.EMPTY_MAP);
 	}
 
 	private RowMapper<ComputerPart> computerPartRowMapper = (ResultSet resultSet, int i) ->
