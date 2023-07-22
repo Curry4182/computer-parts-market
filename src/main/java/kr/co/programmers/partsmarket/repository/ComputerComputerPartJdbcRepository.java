@@ -12,10 +12,12 @@ import java.util.UUID;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import kr.co.programmers.partsmarket.model.ComputerPart;
 import kr.co.programmers.partsmarket.model.ComputerPartCategory;
 
+@Repository
 public class ComputerComputerPartJdbcRepository implements ComputerPartRepository {
 
 	private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -32,8 +34,8 @@ public class ComputerComputerPartJdbcRepository implements ComputerPartRepositor
 	@Override
 	public ComputerPart insert(ComputerPart computerPart) {
 		int insertedPartNum = namedParameterJdbcTemplate.update(
-			"INSERT INTO parts(part_id, part_name, part_category, part_price, part_description, part_created_at"
-			+ "VALUES (UNHEX(REPLACE(:partId, '-', '')), :partName, :partCategory, :partPrice, partDescription, partCreatedAt"
+			"INSERT INTO computer_parts(part_id, part_name, part_category, part_price, part_description, part_created_at)"
+			+ " VALUES(UNHEX(REPLACE(:partId, '-', '')) , :partName, :partCategory, :partPrice, :partDescription, :partCreatedAt)"
 		, toParamMap(computerPart));
 
 		if (insertedPartNum != 1) {
