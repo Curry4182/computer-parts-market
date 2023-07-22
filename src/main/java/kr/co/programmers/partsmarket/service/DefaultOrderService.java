@@ -26,6 +26,6 @@ public class DefaultOrderService implements OrderService{
 	public Order createOrder(String address, String postcode, List<OrderItem> orderItems) {
 		UUID orderId = UUID.randomUUID();
 		OrderStatus orderStatus = OrderStatus.ACCEPTED;
-		return new Order(orderId, address, postcode, orderStatus, orderItems, LocalDateTime.now());
+		return orderRepository.insert(new Order(orderId, address, postcode, orderStatus, orderItems, LocalDateTime.now()));
 	}
 }

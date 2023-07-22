@@ -9,13 +9,12 @@ public class OrderItem {
 	private int quantity;
 	private LocalDateTime created_at;
 
-	public OrderItem(UUID partId, ComputerPartCategory partCategory, long price, int quantity,
-		LocalDateTime created_at) {
+	public OrderItem(UUID partId, ComputerPartCategory partCategory, long price, int quantity) {
 		this.partId = partId;
 		this.partCategory = partCategory;
 		this.price = price;
 		this.quantity = quantity;
-		this.created_at = created_at;
+		this.created_at = LocalDateTime.now();
 	}
 
 	public UUID getPartId() {
