@@ -1,0 +1,32 @@
+package kr.co.programmers.partsmarket.model;
+
+import java.util.UUID;
+public class OrderItem {
+	private final UUID partId;
+	private ComputerPartCategory partCategory;
+	private long price;
+	private int quantity;
+
+	public OrderItem(UUID partId, ComputerPartCategory partCategory, long price, int quantity) {
+		this.partId = partId;
+		this.partCategory = partCategory;
+		this.price = price;
+		this.quantity = quantity;
+	}
+
+	public UUID getPartId() {
+		return partId;
+	}
+
+	public ComputerPartCategory getPartCategory() {
+		return partCategory;
+	}
+
+	public long getPrice() {
+		return price;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+}
