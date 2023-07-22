@@ -8,13 +8,16 @@ public class Order {
 	private final UUID orderId;
 	private String address;
 	private String postcode;
+	private OrderStatus orderStatus;
 	private final List<OrderItem> orderItems;
 	private final LocalDateTime createdAt;
 
-	public Order(UUID orderId, String address, String postcode, List<OrderItem> orderItems, LocalDateTime createdAt) {
+	public Order(UUID orderId, String address, String postcode, OrderStatus orderStatus, List<OrderItem> orderItems,
+		LocalDateTime createdAt) {
 		this.orderId = orderId;
 		this.address = address;
 		this.postcode = postcode;
+		this.orderStatus = orderStatus;
 		this.orderItems = orderItems;
 		this.createdAt = createdAt;
 	}
@@ -25,6 +28,10 @@ public class Order {
 
 	public String getAddress() {
 		return address;
+	}
+
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
 	}
 
 	public String getPostcode() {

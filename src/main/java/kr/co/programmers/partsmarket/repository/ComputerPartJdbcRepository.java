@@ -18,11 +18,11 @@ import kr.co.programmers.partsmarket.model.ComputerPart;
 import kr.co.programmers.partsmarket.model.ComputerPartCategory;
 
 @Repository
-public class ComputerComputerPartJdbcRepository implements ComputerPartRepository {
+public class ComputerPartJdbcRepository implements ComputerPartRepository {
 
 	private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-	public ComputerComputerPartJdbcRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+	public ComputerPartJdbcRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
 		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 	}
 

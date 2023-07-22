@@ -23,7 +23,7 @@ import kr.co.programmers.partsmarket.model.ComputerPartCategory;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class ComputerComputerPartJdbcRepositoryTest {
+class ComputerPartJdbcRepositoryTest {
 
 	@Autowired
 	ComputerPartRepository computerPartRepository;
