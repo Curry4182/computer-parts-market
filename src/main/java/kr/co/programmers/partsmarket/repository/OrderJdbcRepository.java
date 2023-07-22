@@ -10,7 +10,7 @@ import kr.co.programmers.partsmarket.model.Order;
 import kr.co.programmers.partsmarket.model.OrderItem;
 
 @Repository
-public class OrderJdbcRepository implements OrderRepository{
+public class OrderJdbcRepository implements OrderRepository {
 
 	private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -23,14 +23,15 @@ public class OrderJdbcRepository implements OrderRepository{
 		namedParameterJdbcTemplate.update(
 			"INSERT INTO orders(order_id, address, postcode, order_status, created_at) " +
 				"VALUES(UNHEX(REPLACE(:orderId, '-', '')), :address, :postcode, :orderStatus, :createdAt)"
-		, toOrderParamMap(order));
+			, toOrderParamMap(order));
 
 		order.getOrderItems()
 			.forEach(
 				orderItem ->
 					namedParameterJdbcTemplate.update(
 						"INSERT INTO order_items(order_id, part_id, part_category, price, quantity, created_at) " +
-							"VALUES(UNHEX(REPLACE(:orderId, '-', '')), UNHEX(REPLACE(:partId, '-', '')), :partCategory, :price, :quantity, :createdAt)", toOrderItemParamMap(order, orderItem)
+							"VALUES(UNHEX(REPLACE(:orderId, '-', '')), UNHEX(REPLACE(:partId, '-', '')), :partCategory, :price, :quantity, :createdAt)",
+						toOrderItemParamMap(order, orderItem)
 					)
 			);
 

@@ -21,55 +21,6 @@ import kr.co.programmers.partsmarket.model.ComputerPartCategory;
 public class ComputerPartJdbcRepository implements ComputerPartRepository {
 
 	private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-	public ComputerPartJdbcRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
-	}
-
-	@Override
-	public List<ComputerPart> findAll() {
-		return namedParameterJdbcTemplate.query("select * from computer_parts", computerPartRowMapper);
-	}
-
-	@Override
-	public ComputerPart insert(ComputerPart computerPart) {
-		int insertedPartNum = namedParameterJdbcTemplate.update(
-			"INSERT INTO computer_parts(part_id, part_name, part_category, part_price, part_description, part_created_at)"
-			+ " VALUES(UNHEX(REPLACE(:partId, '-', '')) , :partName, :partCategory, :partPrice, :partDescription, :partCreatedAt)"
-		, toParamMap(computerPart));
-
-		if (insertedPartNum != 1) {
-			throw new RuntimeException("Nothing was inserted");
-		}
-
-		return computerPart;
-	}
-
-	@Override
-	public ComputerPart update(ComputerPart computerPart) {
-		int updatedComputerPartNum = namedParameterJdbcTemplate.update(
-			"UPDATE computer_parts SET part_id = :partId, part_name = :partName, part_category = :partCategory, part_price = :partPrice, part_description = :partDescription, part_created_at = :partCreatedAt "
-			+ " where part_id = :partId", toParamMap(computerPart)
-		);
-
-		if(updatedComputerPartNum < 1) {
-			throw new RuntimeException("Nothing was updated!");
-		}
-
-		return computerPart;
-	}
-
-	@Override
-	public ComputerPart findById(UUID partId) {
-		return namedParameterJdbcTemplate.queryForObject("SELECT * FROM computer_parts WHERE part_id = UNHEX(REPLACE(:partId, '-', ''))",
-			Collections.singletonMap("partId", partId.toString().getBytes()), computerPartRowMapper);
-	}
-
-	@Override
-	public void deleteAll() {
-		namedParameterJdbcTemplate.update("DELETE FROM computerParts", Collections.EMPTY_MAP);
-	}
-
 	private RowMapper<ComputerPart> computerPartRowMapper = (ResultSet resultSet, int i) ->
 	{
 		var partId = toUUID(resultSet.getBytes("part_id"));
@@ -88,15 +39,8 @@ public class ComputerPartJdbcRepository implements ComputerPartRepository {
 		);
 	};
 
-	private Map<String, Object> toParamMap(ComputerPart computerPart) {
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("partId", computerPart.getPartId().toString());
-		paramMap.put("partName", computerPart.getPartName());
-		paramMap.put("partCategory", computerPart.getPartCategory().toString());
-		paramMap.put("partPrice", computerPart.getPartPrice());
-		paramMap.put("partDescription", computerPart.getPartDescription());
-		paramMap.put("partCreatedAt", computerPart.getPartCreatedAt());
-		return paramMap;
+	public ComputerPartJdbcRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 	}
 
 	static public UUID toUUID(byte[] bytes) {
@@ -106,5 +50,61 @@ public class ComputerPartJdbcRepository implements ComputerPartRepository {
 
 	static public LocalDateTime toLocalDateTime(Timestamp timestamp) {
 		return timestamp != null ? timestamp.toLocalDateTime() : null;
+	}
+
+	@Override
+	public List<ComputerPart> findAll() {
+		return namedParameterJdbcTemplate.query("select * from computer_parts", computerPartRowMapper);
+	}
+
+	@Override
+	public ComputerPart insert(ComputerPart computerPart) {
+		int insertedPartNum = namedParameterJdbcTemplate.update(
+			"INSERT INTO computer_parts(part_id, part_name, part_category, part_price, part_description, part_created_at)"
+				+ " VALUES(UNHEX(REPLACE(:partId, '-', '')) , :partName, :partCategory, :partPrice, :partDescription, :partCreatedAt)"
+			, toParamMap(computerPart));
+
+		if (insertedPartNum != 1) {
+			throw new RuntimeException("Nothing was inserted");
+		}
+
+		return computerPart;
+	}
+
+	@Override
+	public ComputerPart update(ComputerPart computerPart) {
+		int updatedComputerPartNum = namedParameterJdbcTemplate.update(
+			"UPDATE computer_parts SET part_id = :partId, part_name = :partName, part_category = :partCategory, part_price = :partPrice, part_description = :partDescription, part_created_at = :partCreatedAt "
+				+ " where part_id = :partId", toParamMap(computerPart)
+		);
+
+		if (updatedComputerPartNum < 1) {
+			throw new RuntimeException("Nothing was updated!");
+		}
+
+		return computerPart;
+	}
+
+	@Override
+	public ComputerPart findById(UUID partId) {
+		return namedParameterJdbcTemplate.queryForObject(
+			"SELECT * FROM computer_parts WHERE part_id = UNHEX(REPLACE(:partId, '-', ''))",
+			Collections.singletonMap("partId", partId.toString().getBytes()), computerPartRowMapper);
+	}
+
+	@Override
+	public void deleteAll() {
+		namedParameterJdbcTemplate.update("DELETE FROM computerParts", Collections.EMPTY_MAP);
+	}
+
+	private Map<String, Object> toParamMap(ComputerPart computerPart) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("partId", computerPart.getPartId().toString());
+		paramMap.put("partName", computerPart.getPartName());
+		paramMap.put("partCategory", computerPart.getPartCategory().toString());
+		paramMap.put("partPrice", computerPart.getPartPrice());
+		paramMap.put("partDescription", computerPart.getPartDescription());
+		paramMap.put("partCreatedAt", computerPart.getPartCreatedAt());
+		return paramMap;
 	}
 }

@@ -8,5 +8,6 @@ import kr.co.programmers.partsmarket.model.ComputerPartCategory;
 public interface ComputerPartService {
 	List<ComputerPart> getAllComputerParts();
 
-	ComputerPart createComputerPart(String computerPartName, ComputerPartCategory computerPartCategory, int price, String description);
+	ComputerPart createComputerPart(String computerPartName, ComputerPartCategory computerPartCategory, int price,
+		String description);
 }

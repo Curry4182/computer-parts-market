@@ -7,8 +7,12 @@ import kr.co.programmers.partsmarket.model.ComputerPart;
 
 public interface ComputerPartRepository {
 	List<ComputerPart> findAll();
+
 	ComputerPart insert(ComputerPart computerPart);
+
 	ComputerPart update(ComputerPart computerPart);
+
 	ComputerPart findById(UUID partId);
+
 	void deleteAll();
 }

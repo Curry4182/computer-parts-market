@@ -2,6 +2,7 @@ package kr.co.programmers.partsmarket.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 public class OrderItem {
 	private final UUID partId;
 	private ComputerPartCategory partCategory;

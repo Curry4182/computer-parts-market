@@ -12,9 +12,11 @@ import kr.co.programmers.partsmarket.service.OrderService;
 public class OrderRestController {
 
 	private final OrderService orderService;
+
 	public OrderRestController(OrderService orderService) {
 		this.orderService = orderService;
 	}
+
 	@PostMapping("/api/orders")
 	public Order createOrder(@RequestBody CreateOrderRequest orderRequest) {
 		return orderService.createOrder(

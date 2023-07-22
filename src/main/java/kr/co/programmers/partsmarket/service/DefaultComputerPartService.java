@@ -2,6 +2,7 @@ package kr.co.programmers.partsmarket.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -9,9 +10,8 @@ import kr.co.programmers.partsmarket.model.ComputerPart;
 import kr.co.programmers.partsmarket.model.ComputerPartCategory;
 import kr.co.programmers.partsmarket.repository.ComputerPartRepository;
 
-import java.util.UUID;
 @Service
-public class DefaultComputerPartService implements ComputerPartService{
+public class DefaultComputerPartService implements ComputerPartService {
 
 	private final ComputerPartRepository computerPartRepository;
 

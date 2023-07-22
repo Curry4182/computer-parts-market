@@ -1,15 +1,18 @@
 package kr.co.programmers.partsmarket.model;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 public class ComputerPart {
 	private final UUID partId;
+	private final LocalDateTime partCreatedAt;
 	private String partName;
 	private ComputerPartCategory partCategory;
 	private int partPrice;
 	private String partDescription;
-	private final LocalDateTime partCreatedAt;
 
-	public ComputerPart(UUID partId, String partName, ComputerPartCategory partCategory, int partPrice, String partDescription,
+	public ComputerPart(UUID partId, String partName, ComputerPartCategory partCategory, int partPrice,
+		String partDescription,
 		LocalDateTime partCreatedAt) {
 		this.partId = partId;
 		this.partName = partName;
